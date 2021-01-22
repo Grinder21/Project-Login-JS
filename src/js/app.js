@@ -5,6 +5,7 @@ import {validate} from './helpers/validate';
 import {showInputError, removeInputError} from './views/form';
 import {login} from '../js/services/auth.service';
 import {notify} from './views/notifications';
+import {getNews} from './services/news.service';
 
 const { form, inputEmail, inputPassword } = UI;
 const inputs = [inputEmail, inputPassword];
@@ -18,7 +19,6 @@ form.addEventListener('submit', (e) => {
 inputs.forEach(el => el.addEventListener('focus', () => {
     removeInputError(el);
 }));
-
 
 // Handlers
 async function onSubmit() {
@@ -34,6 +34,7 @@ async function onSubmit() {
 
     try {
     await login(inputEmail.value, inputPassword.value);
+    await getNews();
     form.reset();
     // show success notify
     notify({msg: 'Login success', className: 'alert-success'});
